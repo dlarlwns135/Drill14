@@ -12,9 +12,17 @@ class Ball:
         self.x = x if x else random.randint(100, 1180)
         self.y = y if y else random.randint(100, 924)
 
+    def set_background(self, bg):
+        # fill here
+        self.bg = bg
+        # self.x = self.bg.w / 2
+        # self.y = self.bg.h / 2
+        pass
     def draw(self):
-        self.image.draw(self.x, self.y)
-        draw_rectangle(*self.get_bb())
+        # self.image.draw(self.x, self.y)
+        sx, sy = self.x - self.bg.window_left, self.y - self.bg.window_bottom
+        self.image.clip_draw(0, 0, 21, 21, sx, sy)
+        # draw_rectangle(*self.get_bb())
 
     def update(self):
         pass
@@ -26,6 +34,7 @@ class Ball:
         match group:
             case 'boy:ball':
                 other.ball = self # 소년이 볼을 소유하도록.
+                game_world.remove_object(self)
                 pass
             case 'zombie:ball':
                 other.ball = self
